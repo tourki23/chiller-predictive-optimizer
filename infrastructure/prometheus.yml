@@ -1,8 +1,10 @@
 global:
-  scrape_interval: 5s # Il va interroger ton app toutes les 5 secondes
+  scrape_interval: 15s # Je te conseille 15s pour le cloud, pour ne pas surcharger Azure
 
 scrape_configs:
-  - job_name: 'digital_twin_app'
+  - job_name: 'digital_twin_azure'
+    scheme: https # Important car Azure utilise HTTPS
+    metrics_path: '/metrics'
     static_configs:
-      # host.docker.internal permet à Prometheus (dans Docker) de voir ton app Dash (sur ton PC)
-      - targets: ['host.docker.internal:9050']
+      # On met ton URL Azure (sans le https:// ni les / à la fin)
+      - targets: ['chiller-optimizer-tourki-a0eka5dvfahmbbfn.francecentral-01.azurewebsites.net']
