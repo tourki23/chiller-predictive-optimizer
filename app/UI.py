@@ -1287,18 +1287,14 @@ create_zoom_callback('img-perf-learn')
 # ===========================================================
 update_models_registry_ui("LSTM 128u Attention", "XGBoost Depth 5")
 
-from flask import Flask
-from dash import Dash
+# exposé le serveur Flask pour Azure ---
+server = app.server
 
-# Ton app Dash existante (au niveau global)
-app = Dash(__name__)
-server = app.server  # <- expose le serveur Flask sous-jacent
-
-# Endpoint de santé pour Azure
 @server.route('/health')
 def health():
     return 'OK', 200
+# ---------------------------------------------
 
-# Le bloc principal qui démarre le serveur
 if __name__ == '__main__':
+    # On utilise run_server pour Dash
     app.run_server(host='0.0.0.0', port=9050, debug=False)
