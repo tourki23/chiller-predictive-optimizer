@@ -1282,19 +1282,31 @@ create_zoom_callback('img-perf-learn')
 # ===========================================================
 # LANCEMENT
 # ===========================================================
-# ===========================================================
-# LANCEMENT
-# ===========================================================
-update_models_registry_ui("LSTM 128u Attention", "XGBoost Depth 5")
 
-# exposé le serveur Flask pour Azure ---
+# On expose le serveur Flask pour Azure
 server = app.server
 
+# Endpoint de santé (doit répondre même si les modèles chargent encore)
 @server.route('/health')
 def health():
     return 'OK', 200
-# ---------------------------------------------
 
 if __name__ == '__main__':
-    # On utilise run_server pour Dash
-    app.run_server(host='0.0.0.0', port=9050, debug=False)
+    import os
+    
+    # On récupère le port Azure ou on utilise 9050 par défaut
+    port_azure = int(os.environ.get("PORT", 9050))
+    
+    print("--- DÉMARRAGE DU JUMEAU NUMÉRIQUE ---")
+    print(f"Serveur : http://0.0.0.0:{port_azure}")
+    
+    # OPTIONAL: Tu peux pré-charger ici, mais il est préférable 
+    # de laisser les modèles se charger au premier accès pour ne pas bloquer Azure.
+    try:
+        # On ne bloque pas le démarrage si possible
+        # update_models_registry_ui("LSTM 128u Attention", "XGBoost Depth 5")
+        pass
+    except Exception as e:
+        print(f"Attention: Pré-chargement échoué (sera réessayé au lancement) : {e}")
+
+    app.run_server(host='0.0.0.0', port=port_azure, debug=False)
