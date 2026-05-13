@@ -1,0 +1,19 @@
+# 1. Environnement virtuel (CRITIQUE)
+.venv/
+.venv
+
+# 2. Dossiers de R&D, ancienne versions et d'entraînement (Inutiles en production)
+Pipelines/
+Olds_versions/
+
+# 3. Fichiers de configuration locale
+.python-version
+
+# 4. Fichiers liés à Docker lui-même
+Dockerfile
+.dockerignore
+
+# 5. Sécurité et cache (Bonnes pratiques standards)
+__pycache__/
+*.pyc
+.env

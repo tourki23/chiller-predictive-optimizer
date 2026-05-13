@@ -1,0 +1,8 @@
+global:
+  scrape_interval: 5s # Il va interroger ton app toutes les 5 secondes
+
+scrape_configs:
+  - job_name: 'digital_twin_app'
+    static_configs:
+      # host.docker.internal permet à Prometheus (dans Docker) de voir ton app Dash (sur ton PC)
+      - targets: ['host.docker.internal:9050']
