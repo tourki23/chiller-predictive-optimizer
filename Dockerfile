@@ -20,4 +20,4 @@ COPY . .
 EXPOSE 9050
 
 # Commande pour démarrer l'application (en pointant vers le dossier app)
-CMD ["python", "app/UI.py"]
+CMD ["gunicorn", "--bind", "0.0.0.0:9050", "--timeout", "600", "app.UI:server"]
